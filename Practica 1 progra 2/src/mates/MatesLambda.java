@@ -5,14 +5,26 @@ package mates;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.DoubleSupplier;
 
+/**
+ * Clase que proporciona métodos para generar el valor de Pi utilizando el método de Montecarlo con expresiones lambda.
+ */
 public class MatesLambda {
+
+    /**
+     * Genera una aproximación del valor de Pi utilizando el método de Montecarlo.
+     *
+     * @param n El número de puntos a generar.
+     * @return Una aproximación del valor de Pi.
+     */
     public static double generarPiLambda(long n) {
         double dentroCirculo = contarPuntosDentroCirculo(n);
         return 4.0 * dentroCirculo / n;
     }
 
     private static long contarPuntosDentroCirculo(long n) {
+        // Genera un proveedor de valores aleatorios en el rango [-1, 1] utilizando una expresión lambda.
         DoubleSupplier randomSupplier = () -> ThreadLocalRandom.current().nextDouble() * 2 - 1;
+        // Genera una secuencia de números aleatorios y cuenta cuántos de ellos caen dentro del círculo de radio 1.
         return java.util.stream.DoubleStream.generate(randomSupplier)
                 .limit(n)
                 .filter(x -> {
